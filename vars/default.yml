@@ -1,0 +1,6 @@
+## roles/ntp/vars/default.yml
+# General variables associated with this role.
+# vim:ft=ansible:
+---
+servicename: ntpd
+...

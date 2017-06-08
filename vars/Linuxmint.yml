@@ -1,0 +1,6 @@
+## roles/ntp/vars/Linuxmint.yml
+# General variables associated with this role.
+# vim:ft=ansible:
+---
+servicename: ntp
+...
