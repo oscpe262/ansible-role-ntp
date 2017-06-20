@@ -6,5 +6,6 @@ ntp_enabled: yes
 ntp_state: restarted
 ntp_server: False
 ntp_srv_ip: '192.168.0.102'
+servicename: ntpd
 ...
 
