@@ -1,9 +1,6 @@
 # {{ ansible_managed }} {{ role_path }}
 {% if ntp_server %}
-server 0.arch.pool.ntp.org
-server 1.arch.pool.ntp.org
-server 2.arch.pool.ntp.org
-server 3.arch.pool.ntp.org
+server ida-gw.sysinst.ida.liu.se
 
 restrict default kod limited nomodify nopeer notrap
 logfile /var/log/ntp.log
