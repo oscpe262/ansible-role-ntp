@@ -1,18 +1,18 @@
-# {{ ansible_managed }} {{ role_path }}
-{% if ntp_server %}
-server 0.arch.pool.ntp.org
-server 1.arch.pool.ntp.org
-server 2.arch.pool.ntp.org
-server 3.arch.pool.ntp.org
+# {{ ansible_managed }}
+# For more information about this file, see the ntp.conf(5) man page.
 
+{% for item in ntp_servers %}
+server {{ item }}
+{% endfor %}
+
+{% if is_ntp_server %}
 restrict default kod limited nomodify nopeer notrap
 logfile /var/log/ntp.log
 {% else %}
-server {{ ntp_srv_ip }}
-
-restrict default kod limited nomodify nopeer noquery notrap
+restrict default kod limited nomodify nopeer notrap noquery
 restrict 127.0.0.1
 restrict ::1
 {% endif %}
 
+disable monitor
 driftfile /var/lib/ntp/ntp.drift

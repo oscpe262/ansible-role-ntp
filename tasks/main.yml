@@ -9,8 +9,20 @@
     - "{{ ansible_os_family }}.yml"
     - "default.yml"
 
-- name: "Install ntpd"
-  package: name=ntp state=present
+- name: "Ensure NTP-related packages are installed"
+  package: 
+    name: ntp 
+    state: present
+
+- name: "Ensure tzdata package is installed"
+  package:
+    name: tzdata
+    state: present
+  when: ansible_system == "Linux"
+
+- name: Set timezone
+  timezone:
+    name: '{{ ntp_timezone }}'
 
 - name: "Configure NTP"
   template:
@@ -20,5 +32,8 @@
     - restart ntp
 
 - name: "Start and Enable ntpd.service"
-  service: name='{{ servicename }}' state='{{ ntp_state }}' enabled='{{ ntp_enabled }}'
+  service: 
+    name: '{{ servicename }}' 
+    state: started
+    enabled: yes
 ...

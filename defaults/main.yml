@@ -2,10 +2,18 @@
 # Default lower priority variables for the role
 # vim:ft=ansible:
 ---
-ntp_enabled: yes
-ntp_state: restarted
-ntp_server: False
-ntp_srv_ip: '192.168.0.102'
+is_ntp_server: False
 servicename: ntpd
+
+# Pass desired zone in group_vars/all.yml for convenience.
+ntp_timezone: Europe/Stockholm
+
+# NTP server area (empty = WorldWide)
+ntp_area: ''
+ntp_servers:
+  - "0{{ ntp_area }}.pool.ntp.org iburst"
+  - "1{{ ntp_area }}.pool.ntp.org iburst"
+  - "2{{ ntp_area }}.pool.ntp.org iburst"
+  - "3{{ ntp_area }}.pool.ntp.org iburst"
 ...
 
