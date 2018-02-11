@@ -1,8 +1,10 @@
 ## roles/ntp/handlers/main.yml
 # Handlers for the role
-# vim:ft=ansible:
+# vim:ft: ansible:
 ---
 - name: restart ntp
-  service: name='{{ servicename }}' state='{{ ntp_state }}'
+  service: 
+    name: '{{ servicename }}' 
+    state: restarted
 ...
 
