@@ -1,6 +1,6 @@
 ## roles/ntp/defaults/main.yml
 # Default lower priority variables for the role
-# vim:ft=ansible:
+# vim:ft=yaml.ansible:
 ---
 is_ntp_server: False
 servicename: ntpd
