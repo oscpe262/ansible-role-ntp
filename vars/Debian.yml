@@ -1,0 +1,6 @@
+## roles/ntp/vars/Debian.yml
+# General variables associated with this role.
+# vim:ft=yaml.ansible:
+---
+servicename: ntp
+...

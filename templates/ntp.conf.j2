@@ -1,17 +1,21 @@
-# {{ ansible_managed }}
-# For more information about this file, see the ntp.conf(5) man page.
+{{ ansible_managed | comment }}
+{# For more information about this file, see the ntp.conf(5) man page.#}
 
 {% for item in ntp_servers %}
-server {{ item }}
+server {{ item }} iburst
+host localhost stratum 10
 {% endfor %}
 
 {% if is_ntp_server %}
+# host configured as server
 restrict default kod limited nomodify nopeer notrap
+restrict 192.168.0.0 mask 255.255.255.0
 logfile /var/log/ntp.log
 {% else %}
+# host configured as client
 restrict default kod limited nomodify nopeer notrap noquery
 restrict 127.0.0.1
-restrict ::1
+restrict -6 ::1
 {% endif %}
 
 disable monitor
