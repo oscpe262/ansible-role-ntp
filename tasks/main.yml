@@ -9,9 +9,22 @@
     - "{{ ansible_os_family }}.yml"
     - "default.yml"
 
+- name: "Remove Chrony where ntp package is available"
+  when: ( ansible_os_family != 'RedHat' ) or ( ansible_os_family == 'RedHat' and ansible_distribution_major_version != '8' )
+  package:
+    name: chrony
+    state: absent
+
 - name: "Ensure NTP-related packages are installed"
+  when: ( ansible_os_family != 'RedHat' ) or ( ansible_os_family == 'RedHat' and ansible_distribution_major_version != '8' )
   package: 
     name: ntp 
+    state: present
+
+- name: "Ensure NTP-related packages are installed (RHEL8)"
+  when: ( ansible_os_family == 'RedHat' and ansible_distribution_major_version == '8' )
+  package:
+    name: chrony
     state: present
 
 - name: "Ensure tzdata package is installed"
@@ -25,15 +38,24 @@
     name: '{{ ntp_timezone }}'
 
 - name: "Configure NTP"
+  when: ( ansible_os_family != 'RedHat' ) or ( ansible_os_family == 'RedHat' and ansible_distribution_major_version != '8' )
   template:
     src: ntp.conf.j2
     dest: /etc/ntp.conf
   notify:
     - restart ntp
 
-- name: "Start and Enable ntpd.service"
-  service: 
-    name: '{{ servicename }}' 
-    state: started
-    enabled: yes
+- name: "Configure Chrony"
+  when: ( ansible_os_family == 'RedHat' and ansible_distribution_major_version == '8' )
+  template:
+    src: chrony.conf.j2
+    dest: /etc/chrony.conf
+  notify:
+    - restart ntp
+
+#- name: "Start and Enable ntpd.service"
+#  service: 
+  #    name: '{{ servicename }}' 
+  #  state: started
+  #  enabled: yes
 ...
