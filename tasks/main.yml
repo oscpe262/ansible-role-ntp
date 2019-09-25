@@ -17,8 +17,8 @@
 
 - name: "Ensure NTP-related packages are installed"
   when: ( ansible_os_family != 'RedHat' ) or ( ansible_os_family == 'RedHat' and ansible_distribution_major_version != '8' )
-  package: 
-    name: ntp 
+  package:
+    name: ntp
     state: present
 
 - name: "Ensure NTP-related packages are installed (RHEL8)"
@@ -53,9 +53,16 @@
   notify:
     - restart ntp
 
+- name: "Open firewall if server"
+  firewalld:
+    service: ntp
+    permanent: yes
+    state: enabled
+    immediate: yes
+  when: is_ntp_server
 #- name: "Start and Enable ntpd.service"
-#  service: 
-  #    name: '{{ servicename }}' 
+#  service:
+  #    name: '{{ servicename }}'
   #  state: started
   #  enabled: yes
 ...

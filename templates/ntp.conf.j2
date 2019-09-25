@@ -3,10 +3,10 @@
 
 {% for item in ntp_servers %}
 server {{ item }} iburst
-host localhost stratum 10
 {% endfor %}
 
 {% if is_ntp_server %}
+host localhost stratum 10
 # host configured as server
 restrict default kod limited nomodify nopeer notrap
 restrict 192.168.0.0 mask 255.255.255.0
