@@ -5,26 +5,20 @@
 ## Initialise distribution-specific variables
 - include_vars: "{{ item }}"
   with_first_found:
+    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
     - "{{ ansible_distribution }}.yml"
     - "{{ ansible_os_family }}.yml"
     - "default.yml"
 
 - name: "Remove Chrony where ntp package is available"
-  when: ( ansible_os_family != 'RedHat' ) or ( ansible_os_family == 'RedHat' and ansible_distribution_major_version != '8' )
+  when: ( 'ntp' in ntp_package ) 
   package:
     name: chrony
     state: absent
 
 - name: "Ensure NTP-related packages are installed"
-  when: ( ansible_os_family != 'RedHat' ) or ( ansible_os_family == 'RedHat' and ansible_distribution_major_version != '8' )
   package:
-    name: ntp
-    state: present
-
-- name: "Ensure NTP-related packages are installed (RHEL8)"
-  when: ( ansible_os_family == 'RedHat' and ansible_distribution_major_version == '8' )
-  package:
-    name: chrony
+    name: '{{ ntp_package }}'
     state: present
 
 - name: "Ensure tzdata package is installed"
@@ -38,7 +32,7 @@
     name: '{{ ntp_timezone }}'
 
 - name: "Configure NTP"
-  when: ( ansible_os_family != 'RedHat' ) or ( ansible_os_family == 'RedHat' and ansible_distribution_major_version != '8' )
+  when: ( 'ntp' in ntp_package ) 
   template:
     src: ntp.conf.j2
     dest: /etc/ntp.conf
@@ -46,7 +40,7 @@
     - restart ntp
 
 - name: "Configure Chrony"
-  when: ( ansible_os_family == 'RedHat' and ansible_distribution_major_version == '8' )
+  when: ( 'chrony' in ntp_package ) 
   template:
     src: chrony.conf.j2
     dest: /etc/chrony.conf

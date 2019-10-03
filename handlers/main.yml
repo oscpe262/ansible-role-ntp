@@ -3,8 +3,8 @@
 # vim:ft=yaml.ansible:
 ---
 - name: restart ntp
-  service: 
-    name: '{{ servicename }}' 
+  service:
+    name: '{{ servicename }}'
     state: restarted
+    enabled: yes
 ...
-

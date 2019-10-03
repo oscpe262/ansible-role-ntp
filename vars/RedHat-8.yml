@@ -1,0 +1,2 @@
+servicename: chronyd
+ntp_package: chrony

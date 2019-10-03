@@ -15,5 +15,7 @@ ntp_servers:
   - "1{{ ntp_area }}.pool.ntp.org iburst"
   - "2{{ ntp_area }}.pool.ntp.org iburst"
   - "3{{ ntp_area }}.pool.ntp.org iburst"
+
+ntp_package: ntp
 ...
 
