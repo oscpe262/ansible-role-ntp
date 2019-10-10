@@ -17,5 +17,6 @@ ntp_servers:
   - "3{{ ntp_area }}.pool.ntp.org iburst"
 
 ntp_package: ntp
+ntp_chrony_conf_path: "/etc"
 ...
 
