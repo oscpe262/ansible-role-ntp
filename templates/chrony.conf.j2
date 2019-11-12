@@ -1,7 +1,7 @@
 {{ ansible_managed | comment}}
 # Server list
-{% for server in ntp_servers %}
-server {{ server }}
+{% for server in ntp_servers %} 
+server {{ server }} iburst
 {% endfor %}
 
 # Ignore stratum in source selection.

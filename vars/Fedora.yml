@@ -1,0 +1,3 @@
+## roles/ansible-role-ntp/vars/Fedora.yml
+servicename: chronyd
+ntp_package: chrony
