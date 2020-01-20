@@ -1,14 +1,36 @@
-## roles/ntp/meta/main.yml
-# Meta file for ntp 
-# vim:ft=yaml.ansible:
----
-## If another role lists a dependency, it will only run once by default.
-allow_duplicates: no
+galaxy_info:
+  author: Oscar Petersson
+  description: A role for setting up ntp/chrony
 
-## List of role dependencies
+  license: MIT
+
+  min_ansible_version: 2.9
+
+  platforms:
+  - name: Fedora
+    versions:
+      - 29
+      - 30
+      - 31
+  - name: EL
+    versions:
+      - 7
+      - 8
+  - name: Debian
+    versions:
+      - 9
+      - 10
+  - name: Ubuntu
+    versions:
+      - bionic
+      - disco dingo
+      - eoan
+
+  galaxy_tags:
+    - rhel
+    - redhat
+    - ntp
+    - chrony
+
 dependencies: []
-  # If dependency, remove brackets, list as suggested below:
-  # - { role: foorole, some_parameter: 3, another_parameter: 4  }
-
-...
-
+allow_duplicates: no

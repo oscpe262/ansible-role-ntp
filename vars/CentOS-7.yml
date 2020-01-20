@@ -1,0 +1,3 @@
+## roles/ansible-role-ntp/vars/CentOS-7.yml
+servicename: chronyd
+ntp_package: chrony

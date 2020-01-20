@@ -1,17 +1,22 @@
 ## roles/ntp/tasks/main.yml
-## Role main file
 # vim:ft=yaml.ansible:
 ---
-## Initialise distribution-specific variables
-- include_vars: "{{ item }}"
+- name: "Include distribution-specific variables"
+  include_vars: "{{ item }}"
   with_first_found:
     - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
     - "{{ ansible_distribution }}.yml"
     - "{{ ansible_os_family }}.yml"
     - "default.yml"
 
+- name: "Remove ntp where Chrony package is available"
+  when: ( 'chrony' in ntp_package )
+  package:
+    name: ntp
+    state: absent
+
 - name: "Remove Chrony where ntp package is available"
-  when: ( 'ntp' in ntp_package ) 
+  when: ( 'ntp' in ntp_package )
   package:
     name: chrony
     state: absent
@@ -32,7 +37,7 @@
     name: '{{ ntp_timezone }}'
 
 - name: "Configure NTP"
-  when: ( 'ntp' in ntp_package ) 
+  when: ( 'ntp' in ntp_package )
   template:
     src: ntp.conf.j2
     dest: /etc/ntp.conf
@@ -40,7 +45,7 @@
     - restart ntp
 
 - name: "Configure Chrony"
-  when: ( 'chrony' in ntp_package ) 
+  when: ( 'chrony' in ntp_package )
   template:
     src: chrony.conf.j2
     dest: '{{ ntp_chrony_conf_path }}/chrony.conf'
@@ -54,9 +59,4 @@
     state: enabled
     immediate: yes
   when: is_ntp_server
-#- name: "Start and Enable ntpd.service"
-#  service:
-  #    name: '{{ servicename }}'
-  #  state: started
-  #  enabled: yes
 ...
