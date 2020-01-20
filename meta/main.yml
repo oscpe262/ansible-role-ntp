@@ -32,6 +32,8 @@ galaxy_info:
     - redhat
     - ntp
     - chrony
+    - system
+    - networking
 
 dependencies: []
 allow_duplicates: no
