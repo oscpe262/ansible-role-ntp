@@ -19,4 +19,3 @@ ntp_servers:
 ntp_package: ntp
 ntp_chrony_conf_path: "/etc"
 ...
-
