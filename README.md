@@ -20,7 +20,7 @@ There are vars files for several distros, but since galaxy-publishing only the o
 ```Yaml
 - hosts: foo
   roles:
-    - { role: ntp }
+    - { role: oscpe262.ntp }
   vars:
     ntp_servers:
       - 10.0.0.10
